@@ -11,7 +11,7 @@ connetion = pymongo.MongoClient("mongodb://mongodbforserver:E9wBw9l9BTU1z82GLI26
 db = connetion["webdb"]
 col = db["webdb_id"]
 
-location = "부산"
+location = input("지역을입력하세요\n")
 Finallocation = location + '날씨'
 LocationInfo = ""
 NowTemp = ""
