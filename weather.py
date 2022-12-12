@@ -2,14 +2,13 @@ import matplotlib.pyplot as plt
 import requests
 from bs4 import BeautifulSoup
 import re
-import numpy as np
 import json
 import pymongo
-
 
 connetion = pymongo.MongoClient("mongodb://mongodbforserver:E9wBw9l9BTU1z82GLI26FJLVJK2VQTWs5C7QttBMQMPApALEZnY1q4kOwjf2U3ENs1X1JAbOiru0ACDbbcIdUg==@mongodbforserver.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@mongodbforserver@")#private connetion String
 db = connetion["webdb"] #cosmos mongo db DB명
 col = db["webdb_id"]    #collention명
+
 
 location = input("지역을 입력하세요\n>>> ")
 Finallocation = location + '날씨'
@@ -51,17 +50,15 @@ date4 = list_box_weekly_weather.find_all("li")[3].get_text().strip()
 date5 = list_box_weekly_weather.find_all("li")[4].get_text().strip()
 date6 = list_box_weekly_weather.find_all("li")[5].get_text().strip()
 date7 = list_box_weekly_weather.find_all("li")[6].get_text().strip()
-print(date1)
-print(date2)
-print(date3)
-print(date4)
-print(date5)
-print(date6)
-print(date7)
+
 
 week = {}
+listdate = [date1, date2, date3, date4, date5, date6, date7]
 
-date1 = date1.split() # split : 부분 추출
+for i in range(0, 6):
+    print(listdate[i])
+    i = listdate[i].split
+date1 = date1.split()
 date2 = date2.split()
 date3 = date3.split()
 date4 = date4.split()
@@ -69,18 +66,26 @@ date5 = date5.split()
 date6 = date6.split()
 date7 = date7.split()
 
+lenlist = []
+#길이 반환
+
+lenlist.append(len(date1)), lenlist.append(len(date2)), lenlist.append(len(date3))
+lenlist.append(len(date4)), lenlist.append(len(date5)), lenlist.append(len(date6))
+lenlist.append(len(date7))
+
 listdata = [1, 6, 8]
 listre = []
+LEN = 9
 
 for i in listdata:
     if (i > 1):
-        listre.append(re.findall("-?\d+", date1[i+2])) #숫자만 추출
-        listre.append(re.findall("-?\d+", date2[i+2]))
-        listre.append(re.findall("-?\d+", date3[i]))
-        listre.append(re.findall("-?\d+", date4[i]))
-        listre.append(re.findall("-?\d+", date5[i]))
-        listre.append(re.findall("-?\d+", date6[i]))
-        listre.append(re.findall("-?\d+", date7[i]))
+        listre.append(re.findall("-?\d+", date1[i + (lenlist[0] - LEN)])) #숫자만 추출
+        listre.append(re.findall("-?\d+", date2[i + (lenlist[1] - LEN)]))
+        listre.append(re.findall("-?\d+", date3[i + (lenlist[2] - LEN)]))
+        listre.append(re.findall("-?\d+", date4[i + (lenlist[3] - LEN)]))
+        listre.append(re.findall("-?\d+", date5[i + (lenlist[4] - LEN)]))
+        listre.append(re.findall("-?\d+", date6[i + (lenlist[5] - LEN)]))
+        listre.append(re.findall("-?\d+", date7[i + (lenlist[6] - LEN)]))
         listre = sum(listre,[]) #1차원 변환
         listre = list(map(int, listre)) #int형 변환
     else :
@@ -99,12 +104,12 @@ for i in listdata:
         week['maxtemp'] = listre
     listre = []
 
-plt.plot('date', 'mintemp',data=week)   #그래프 그리기(날짜, 최저기온, 최고기온)
-plt.plot('date', 'maxtemp',data=week)
+print(week)
+plt.plot('date', 'mintemp', data=week)   #그래프 그리기(날짜, 최저기온, 최고기온)
+plt.plot('date', 'maxtemp', data=week)
 plt.show()
 
 with open('week.json', 'w') as f :  #json 변환
 	json.dump(week, f, indent=3)
-
 
 data = col.insert_one(week) #cosmos db에 파일 저장
