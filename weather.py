@@ -86,6 +86,13 @@ for i in listdata:
         listre.append(re.findall("-?\d+", date5[i + (lenlist[4] - LEN)]))
         listre.append(re.findall("-?\d+", date6[i + (lenlist[5] - LEN)]))
         listre.append(re.findall("-?\d+", date7[i + (lenlist[6] - LEN)]))
+        listre.append(re.findall("-?\d+", date1[i+4])) #숫자만 추출
+        listre.append(re.findall("-?\d+", date2[i]))
+        listre.append(re.findall("-?\d+", date3[i]))
+        listre.append(re.findall("-?\d+", date4[i]))
+        listre.append(re.findall("-?\d+", date5[i]))
+        listre.append(re.findall("-?\d+", date6[i]))
+        listre.append(re.findall("-?\d+", date7[i]))
         listre = sum(listre,[]) #1차원 변환
         listre = list(map(int, listre)) #int형 변환
     else :
