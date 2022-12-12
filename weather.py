@@ -74,8 +74,8 @@ listre = []
 
 for i in listdata:
     if (i > 1):
-        listre.append(re.findall("-?\d+", date1[i+2])) #숫자만 추출
-        listre.append(re.findall("-?\d+", date2[i+2]))
+        listre.append(re.findall("-?\d+", date1[i+4])) #숫자만 추출
+        listre.append(re.findall("-?\d+", date2[i]))
         listre.append(re.findall("-?\d+", date3[i]))
         listre.append(re.findall("-?\d+", date4[i]))
         listre.append(re.findall("-?\d+", date5[i]))
